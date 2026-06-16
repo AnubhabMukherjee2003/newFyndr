@@ -1,0 +1,383 @@
+{
+  "info": {
+    "name": "Dynamic Role Matching Engine API",
+    "description": "API collection for the Dynamic Role Matching Engine (newfyndr) backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Cooper\",\n  \"profileData\": {\n    \"github\": \"https://github.com/alice\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Assign Role Schema",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roleSchemaId\": \"student-role-id\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me/role",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me", "role"]
+            }
+          }
+        },
+        {
+          "name": "Fill Modules Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\n      \"module_id\": \"subject-module-id\",\n      \"data\": [\"Math\", \"Physics\"]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me/modules",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me", "modules"]
+            }
+          }
+        },
+        {
+          "name": "Clear Module",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me/modules/subject-module-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me", "modules", "subject-module-id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feed",
+      "item": [
+        {
+          "name": "Get Scored Feed",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/feed",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "feed"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interactions",
+      "item": [
+        {
+          "name": "Like Candidate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/interactions/like/target-user-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "interactions", "like", "target-user-id"]
+            }
+          }
+        },
+        {
+          "name": "Pass Candidate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/interactions/pass/target-user-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "interactions", "pass", "target-user-id"]
+            }
+          }
+        },
+        {
+          "name": "Get Mutual Matches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/interactions/matches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "interactions", "matches"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Roles",
+      "item": [
+        {
+          "name": "Create Role Schema",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"student-role-id\",\n  \"roleName\": \"Student\",\n  \"assignedRoles\": [\"teacher-role-id\"],\n  \"profileTemplate\": {\n    \"college\": \"string\"\n  },\n  \"requireModules\": [\n    {\n      \"module_id\": \"learning-module-id\",\n      \"weight\": 0.6,\n      \"target_role\": \"teacher-role-id\",\n      \"question\": \"Choose what you want to learn\",\n      \"input_type\": \"MULTI_CHOICE\",\n      \"data_type\": \"VECTOR\",\n      \"match_type\": \"OVERLAP_MATCH\",\n      \"options\": [\"Math\", \"Physics\", \"CS\"]\n    }\n  ],\n  \"provideModules\": [\n    {\n      \"module_id\": \"year-module-id\",\n      \"weight\": 0.4,\n      \"target_role\": null,\n      \"question\": \"Which year are you in?\",\n      \"input_type\": \"SINGLE_CHOICE\",\n      \"data_type\": \"VECTOR\",\n      \"match_type\": \"OVERLAP_MATCH\",\n      \"options\": [\"1st\", \"2nd\", \"3rd\"]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles"]
+            }
+          }
+        },
+        {
+          "name": "List All Role Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles"]
+            }
+          }
+        },
+        {
+          "name": "Get Role Schema Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles/student-role-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles", "student-role-id"]
+            }
+          }
+        },
+        {
+          "name": "Update Role Schema",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roleName\": \"Undergrad Student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles/student-role-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles", "student-role-id"]
+            }
+          }
+        },
+        {
+          "name": "Delete Role Schema",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles/student-role-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles", "student-role-id"]
+            }
+          }
+        },
+        {
+          "name": "Get Propagation Hints",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/roles/hints",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "roles", "hints"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "your_jwt_access_token_here",
+      "type": "string"
+    }
+  ]
+}

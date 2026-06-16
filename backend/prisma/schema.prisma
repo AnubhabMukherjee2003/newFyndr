@@ -1,0 +1,59 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  role         UserRole    @default(USER)
+  roleSchemaId String?
+  roleSchema   RoleSchema? @relation(fields: [roleSchemaId], references: [id])
+  profileData  Json        @default("{}")
+  moduleData   Json        @default("[]")
+  createdAt    DateTime    @default(now())
+
+  sentInteractions     Interaction[] @relation("Sender")
+  receivedInteractions Interaction[] @relation("Receiver")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model RoleSchema {
+  id              String   @id @default(cuid())
+  roleName        String
+  assignedRoles   String[]
+  profileTemplate Json     @default("{}")
+  requireModules  Json     @default("[]")
+  provideModules  Json     @default("[]")
+  createdAt       DateTime @default(now())
+  users           User[]
+}
+
+model Interaction {
+  id         String          @id @default(cuid())
+  senderId   String
+  receiverId String
+  type       InteractionType
+  createdAt  DateTime        @default(now())
+
+  sender   User @relation("Sender",   fields: [senderId],   references: [id])
+  receiver User @relation("Receiver", fields: [receiverId], references: [id])
+
+  @@unique([senderId, receiverId])
+}
+
+enum InteractionType {
+  LIKE
+  PASS
+  MATCH
+}
