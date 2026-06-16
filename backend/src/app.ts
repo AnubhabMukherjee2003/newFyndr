@@ -11,7 +11,7 @@ import interactionsRoutes from "./modules/interactions/interactions.routes";
 
 const app = express();
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: env.CORS_ORIGIN.split(","),
   credentials: true
 }));
 app.use(express.json());

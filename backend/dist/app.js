@@ -15,7 +15,7 @@ const feed_routes_1 = __importDefault(require("./modules/feed/feed.routes"));
 const interactions_routes_1 = __importDefault(require("./modules/interactions/interactions.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: env_1.env.CORS_ORIGIN.split(","),
     credentials: true
 }));
 app.use(express_1.default.json());

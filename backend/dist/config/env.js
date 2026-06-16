@@ -17,5 +17,6 @@ const envSchema = zod_1.z.object({
     JWT_ACCESS_EXPIRES_IN: zod_1.z.string().default("15m"),
     JWT_REFRESH_EXPIRES_IN: zod_1.z.string().default("7d"),
     PORT: zod_1.z.coerce.number().default(4000),
+    CORS_ORIGIN: zod_1.z.string().default("http://localhost:5173,http://localhost:5174"),
 });
 exports.env = envSchema.parse(process.env);
